@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qxxg.springcloud.cloudmbg.mapper.TyUserMapper">
+  <resultMap id="BaseResultMap" type="com.qxxg.springcloud.cloudmbg.entity.TyUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="loginname" jdbcType="CHAR" property="loginname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_delete" jdbcType="INTEGER" property="userDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="online_status" jdbcType="INTEGER" property="onlineStatus" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="verification_code" jdbcType="CHAR" property="verificationCode" />
+    <result column="vpn_line" jdbcType="INTEGER" property="vpnLine" />
+    <result column="promotion_code" jdbcType="VARCHAR" property="promotionCode" />
+    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
+    <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
+    <result column="end_status" jdbcType="INTEGER" property="endStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, loginname, email, password, user_delete, create_time, last_time, login_ip, user_type, 
+    nickname, secret_key, online_status, end_time, verification_code, vpn_line, promotion_code, 
+    referrer, photo_url, end_status
+  </sql>
+  <select id="selectByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ty_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ty_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ty_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUserExample">
+    delete from ty_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ty_user (loginname, email, password, 
+      user_delete, create_time, last_time, 
+      login_ip, user_type, nickname, 
+      secret_key, online_status, end_time, 
+      verification_code, vpn_line, promotion_code, 
+      referrer, photo_url, end_status
+      )
+    values (#{loginname,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastTime,jdbcType=TIMESTAMP}, 
+      #{loginIp,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{secretKey,jdbcType=VARCHAR}, #{onlineStatus,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{verificationCode,jdbcType=CHAR}, #{vpnLine,jdbcType=INTEGER}, #{promotionCode,jdbcType=VARCHAR}, 
+      #{referrer,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, #{endStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUser">
+    insert into ty_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loginname != null">
+        loginname,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="userDelete != null">
+        user_delete,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="loginIp != null">
+        login_ip,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="secretKey != null">
+        secret_key,
+      </if>
+      <if test="onlineStatus != null">
+        online_status,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="verificationCode != null">
+        verification_code,
+      </if>
+      <if test="vpnLine != null">
+        vpn_line,
+      </if>
+      <if test="promotionCode != null">
+        promotion_code,
+      </if>
+      <if test="referrer != null">
+        referrer,
+      </if>
+      <if test="photoUrl != null">
+        photo_url,
+      </if>
+      <if test="endStatus != null">
+        end_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+      #{id},
+    </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userDelete != null">
+        #{userDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineStatus != null">
+        #{onlineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationCode != null">
+        #{verificationCode,jdbcType=CHAR},
+      </if>
+      <if test="vpnLine != null">
+        #{vpnLine,jdbcType=INTEGER},
+      </if>
+      <if test="promotionCode != null">
+        #{promotionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl != null">
+        #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="endStatus != null">
+        #{endStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUserExample" resultType="java.lang.Long">
+    select count(*) from ty_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ty_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginname != null">
+        loginname = #{record.loginname,jdbcType=CHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userDelete != null">
+        user_delete = #{record.userDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginIp != null">
+        login_ip = #{record.loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secretKey != null">
+        secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlineStatus != null">
+        online_status = #{record.onlineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verificationCode != null">
+        verification_code = #{record.verificationCode,jdbcType=CHAR},
+      </if>
+      <if test="record.vpnLine != null">
+        vpn_line = #{record.vpnLine,jdbcType=INTEGER},
+      </if>
+      <if test="record.promotionCode != null">
+        promotion_code = #{record.promotionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrer != null">
+        referrer = #{record.referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photoUrl != null">
+        photo_url = #{record.photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endStatus != null">
+        end_status = #{record.endStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ty_user
+    set id = #{record.id,jdbcType=BIGINT},
+      loginname = #{record.loginname,jdbcType=CHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      user_delete = #{record.userDelete,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      login_ip = #{record.loginIp,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      online_status = #{record.onlineStatus,jdbcType=INTEGER},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      verification_code = #{record.verificationCode,jdbcType=CHAR},
+      vpn_line = #{record.vpnLine,jdbcType=INTEGER},
+      promotion_code = #{record.promotionCode,jdbcType=VARCHAR},
+      referrer = #{record.referrer,jdbcType=VARCHAR},
+      photo_url = #{record.photoUrl,jdbcType=VARCHAR},
+      end_status = #{record.endStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUser">
+    update ty_user
+    <set>
+      <if test="loginname != null">
+        loginname = #{loginname,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userDelete != null">
+        user_delete = #{userDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineStatus != null">
+        online_status = #{onlineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationCode != null">
+        verification_code = #{verificationCode,jdbcType=CHAR},
+      </if>
+      <if test="vpnLine != null">
+        vpn_line = #{vpnLine,jdbcType=INTEGER},
+      </if>
+      <if test="promotionCode != null">
+        promotion_code = #{promotionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        referrer = #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl != null">
+        photo_url = #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="endStatus != null">
+        end_status = #{endStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qxxg.springcloud.cloudmbg.entity.TyUser">
+    update ty_user
+    set loginname = #{loginname,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_delete = #{userDelete,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      online_status = #{onlineStatus,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      verification_code = #{verificationCode,jdbcType=CHAR},
+      vpn_line = #{vpnLine,jdbcType=INTEGER},
+      promotion_code = #{promotionCode,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=VARCHAR},
+      photo_url = #{photoUrl,jdbcType=VARCHAR},
+      end_status = #{endStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

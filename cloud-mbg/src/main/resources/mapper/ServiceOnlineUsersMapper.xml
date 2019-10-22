@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qxxg.springcloud.cloudmbg.mapper.ServiceOnlineUsersMapper">
+  <resultMap id="BaseResultMap" type="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsers">
+    <id column="ip_port" jdbcType="VARCHAR" property="ipPort" />
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="service_id" jdbcType="BIGINT" property="serviceId" />
+    <result column="port" jdbcType="VARCHAR" property="port" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="online_users" jdbcType="INTEGER" property="onlineUsers" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ip_port, id, service_id, port, passwd, method, online_users
+  </sql>
+  <select id="selectByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from service_online_users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from service_online_users
+    where ip_port = #{ipPort,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_online_users
+    where ip_port = #{ipPort,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsersExample">
+    delete from service_online_users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsers">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_online_users (ip_port, service_id, port, 
+      passwd, method, online_users
+      )
+    values (#{ipPort,jdbcType=VARCHAR}, #{serviceId,jdbcType=BIGINT}, #{port,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{onlineUsers,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsers">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_online_users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ipPort != null">
+        ip_port,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="port != null">
+        port,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="onlineUsers != null">
+        online_users,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ipPort != null">
+        #{ipPort,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="port != null">
+        #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineUsers != null">
+        #{onlineUsers,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsersExample" resultType="java.lang.Long">
+    select count(*) from service_online_users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update service_online_users
+    <set>
+      <if test="record.ipPort != null">
+        ip_port = #{record.ipPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceId != null">
+        service_id = #{record.serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.port != null">
+        port = #{record.port,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlineUsers != null">
+        online_users = #{record.onlineUsers,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update service_online_users
+    set ip_port = #{record.ipPort,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=BIGINT},
+      service_id = #{record.serviceId,jdbcType=BIGINT},
+      port = #{record.port,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      online_users = #{record.onlineUsers,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsers">
+    update service_online_users
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serviceId != null">
+        service_id = #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="port != null">
+        port = #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineUsers != null">
+        online_users = #{onlineUsers,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ip_port = #{ipPort,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceOnlineUsers">
+    update service_online_users
+    set id = #{id,jdbcType=BIGINT},
+      service_id = #{serviceId,jdbcType=BIGINT},
+      port = #{port,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      online_users = #{onlineUsers,jdbcType=INTEGER}
+    where ip_port = #{ipPort,jdbcType=VARCHAR}
+  </update>
+</mapper>

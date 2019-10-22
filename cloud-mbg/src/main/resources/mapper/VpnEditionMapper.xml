@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qxxg.springcloud.cloudmbg.mapper.VpnEditionMapper">
+  <resultMap id="BaseResultMap" type="com.qxxg.springcloud.cloudmbg.entity.VpnEdition">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="edition_no" jdbcType="VARCHAR" property="editionNo" />
+    <result column="doc_name" jdbcType="VARCHAR" property="docName" />
+    <result column="doc_size" jdbcType="VARCHAR" property="docSize" />
+    <result column="verify_value" jdbcType="VARCHAR" property="verifyValue" />
+    <result column="edition_type" jdbcType="SMALLINT" property="editionType" />
+    <result column="terminal_type" jdbcType="SMALLINT" property="terminalType" />
+    <result column="edition_state" jdbcType="SMALLINT" property="editionState" />
+    <result column="edition_code" jdbcType="VARCHAR" property="editionCode" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, publish_time, edition_no, doc_name, doc_size, verify_value, edition_type, terminal_type, 
+    edition_state, edition_code, description
+  </sql>
+  <select id="selectByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEditionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from vpn_edition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vpn_edition
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vpn_edition
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEditionExample">
+    delete from vpn_edition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEdition">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into vpn_edition (publish_time, edition_no, doc_name, 
+      doc_size, verify_value, edition_type, 
+      terminal_type, edition_state, edition_code, 
+      description)
+    values (#{publishTime,jdbcType=TIMESTAMP}, #{editionNo,jdbcType=VARCHAR}, #{docName,jdbcType=VARCHAR}, 
+      #{docSize,jdbcType=VARCHAR}, #{verifyValue,jdbcType=VARCHAR}, #{editionType,jdbcType=SMALLINT}, 
+      #{terminalType,jdbcType=SMALLINT}, #{editionState,jdbcType=SMALLINT}, #{editionCode,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEdition">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into vpn_edition
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="editionNo != null">
+        edition_no,
+      </if>
+      <if test="docName != null">
+        doc_name,
+      </if>
+      <if test="docSize != null">
+        doc_size,
+      </if>
+      <if test="verifyValue != null">
+        verify_value,
+      </if>
+      <if test="editionType != null">
+        edition_type,
+      </if>
+      <if test="terminalType != null">
+        terminal_type,
+      </if>
+      <if test="editionState != null">
+        edition_state,
+      </if>
+      <if test="editionCode != null">
+        edition_code,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editionNo != null">
+        #{editionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="docName != null">
+        #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="docSize != null">
+        #{docSize,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyValue != null">
+        #{verifyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="editionType != null">
+        #{editionType,jdbcType=SMALLINT},
+      </if>
+      <if test="terminalType != null">
+        #{terminalType,jdbcType=SMALLINT},
+      </if>
+      <if test="editionState != null">
+        #{editionState,jdbcType=SMALLINT},
+      </if>
+      <if test="editionCode != null">
+        #{editionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEditionExample" resultType="java.lang.Long">
+    select count(*) from vpn_edition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update vpn_edition
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishTime != null">
+        publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editionNo != null">
+        edition_no = #{record.editionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docName != null">
+        doc_name = #{record.docName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docSize != null">
+        doc_size = #{record.docSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyValue != null">
+        verify_value = #{record.verifyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editionType != null">
+        edition_type = #{record.editionType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.terminalType != null">
+        terminal_type = #{record.terminalType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.editionState != null">
+        edition_state = #{record.editionState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.editionCode != null">
+        edition_code = #{record.editionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update vpn_edition
+    set id = #{record.id,jdbcType=BIGINT},
+      publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      edition_no = #{record.editionNo,jdbcType=VARCHAR},
+      doc_name = #{record.docName,jdbcType=VARCHAR},
+      doc_size = #{record.docSize,jdbcType=VARCHAR},
+      verify_value = #{record.verifyValue,jdbcType=VARCHAR},
+      edition_type = #{record.editionType,jdbcType=SMALLINT},
+      terminal_type = #{record.terminalType,jdbcType=SMALLINT},
+      edition_state = #{record.editionState,jdbcType=SMALLINT},
+      edition_code = #{record.editionCode,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEdition">
+    update vpn_edition
+    <set>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editionNo != null">
+        edition_no = #{editionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="docName != null">
+        doc_name = #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="docSize != null">
+        doc_size = #{docSize,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyValue != null">
+        verify_value = #{verifyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="editionType != null">
+        edition_type = #{editionType,jdbcType=SMALLINT},
+      </if>
+      <if test="terminalType != null">
+        terminal_type = #{terminalType,jdbcType=SMALLINT},
+      </if>
+      <if test="editionState != null">
+        edition_state = #{editionState,jdbcType=SMALLINT},
+      </if>
+      <if test="editionCode != null">
+        edition_code = #{editionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qxxg.springcloud.cloudmbg.entity.VpnEdition">
+    update vpn_edition
+    set publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      edition_no = #{editionNo,jdbcType=VARCHAR},
+      doc_name = #{docName,jdbcType=VARCHAR},
+      doc_size = #{docSize,jdbcType=VARCHAR},
+      verify_value = #{verifyValue,jdbcType=VARCHAR},
+      edition_type = #{editionType,jdbcType=SMALLINT},
+      terminal_type = #{terminalType,jdbcType=SMALLINT},
+      edition_state = #{editionState,jdbcType=SMALLINT},
+      edition_code = #{editionCode,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

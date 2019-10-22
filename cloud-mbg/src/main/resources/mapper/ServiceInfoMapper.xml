@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qxxg.springcloud.cloudmbg.mapper.ServiceInfoMapper">
+  <resultMap id="BaseResultMap" type="com.qxxg.springcloud.cloudmbg.entity.ServiceInfo">
+    <id column="ip_addr" jdbcType="VARCHAR" property="ipAddr" />
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="max_support" jdbcType="INTEGER" property="maxSupport" />
+    <result column="net_delay" jdbcType="INTEGER" property="netDelay" />
+    <result column="target_area" jdbcType="VARCHAR" property="targetArea" />
+    <result column="server_status" jdbcType="VARCHAR" property="serverStatus" />
+    <result column="cpu_utility" jdbcType="VARCHAR" property="cpuUtility" />
+    <result column="mem_free" jdbcType="VARCHAR" property="memFree" />
+    <result column="server_type" jdbcType="VARCHAR" property="serverType" />
+    <result column="server_level" jdbcType="VARCHAR" property="serverLevel" />
+    <result column="software_ver" jdbcType="VARCHAR" property="softwareVer" />
+    <result column="system_ver" jdbcType="VARCHAR" property="systemVer" />
+    <result column="cpu" jdbcType="VARCHAR" property="cpu" />
+    <result column="memory" jdbcType="VARCHAR" property="memory" />
+    <result column="hdisk" jdbcType="VARCHAR" property="hdisk" />
+    <result column="net_card" jdbcType="VARCHAR" property="netCard" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ip_addr, id, max_support, net_delay, target_area, server_status, cpu_utility, mem_free, 
+    server_type, server_level, software_ver, system_ver, cpu, memory, hdisk, net_card, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from service_info
+    where ip_addr = #{ipAddr,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_info
+    where ip_addr = #{ipAddr,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfoExample">
+    delete from service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_info (ip_addr, max_support, net_delay, 
+      target_area, server_status, cpu_utility, 
+      mem_free, server_type, server_level, 
+      software_ver, system_ver, cpu, 
+      memory, hdisk, net_card, 
+      create_time)
+    values (#{ipAddr,jdbcType=VARCHAR}, #{maxSupport,jdbcType=INTEGER}, #{netDelay,jdbcType=INTEGER}, 
+      #{targetArea,jdbcType=VARCHAR}, #{serverStatus,jdbcType=VARCHAR}, #{cpuUtility,jdbcType=VARCHAR}, 
+      #{memFree,jdbcType=VARCHAR}, #{serverType,jdbcType=VARCHAR}, #{serverLevel,jdbcType=VARCHAR}, 
+      #{softwareVer,jdbcType=VARCHAR}, #{systemVer,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, 
+      #{memory,jdbcType=VARCHAR}, #{hdisk,jdbcType=VARCHAR}, #{netCard,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ipAddr != null">
+        ip_addr,
+      </if>
+      <if test="maxSupport != null">
+        max_support,
+      </if>
+      <if test="netDelay != null">
+        net_delay,
+      </if>
+      <if test="targetArea != null">
+        target_area,
+      </if>
+      <if test="serverStatus != null">
+        server_status,
+      </if>
+      <if test="cpuUtility != null">
+        cpu_utility,
+      </if>
+      <if test="memFree != null">
+        mem_free,
+      </if>
+      <if test="serverType != null">
+        server_type,
+      </if>
+      <if test="serverLevel != null">
+        server_level,
+      </if>
+      <if test="softwareVer != null">
+        software_ver,
+      </if>
+      <if test="systemVer != null">
+        system_ver,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="hdisk != null">
+        hdisk,
+      </if>
+      <if test="netCard != null">
+        net_card,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ipAddr != null">
+        #{ipAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="maxSupport != null">
+        #{maxSupport,jdbcType=INTEGER},
+      </if>
+      <if test="netDelay != null">
+        #{netDelay,jdbcType=INTEGER},
+      </if>
+      <if test="targetArea != null">
+        #{targetArea,jdbcType=VARCHAR},
+      </if>
+      <if test="serverStatus != null">
+        #{serverStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuUtility != null">
+        #{cpuUtility,jdbcType=VARCHAR},
+      </if>
+      <if test="memFree != null">
+        #{memFree,jdbcType=VARCHAR},
+      </if>
+      <if test="serverType != null">
+        #{serverType,jdbcType=VARCHAR},
+      </if>
+      <if test="serverLevel != null">
+        #{serverLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVer != null">
+        #{softwareVer,jdbcType=VARCHAR},
+      </if>
+      <if test="systemVer != null">
+        #{systemVer,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="hdisk != null">
+        #{hdisk,jdbcType=VARCHAR},
+      </if>
+      <if test="netCard != null">
+        #{netCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfoExample" resultType="java.lang.Long">
+    select count(*) from service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update service_info
+    <set>
+      <if test="record.ipAddr != null">
+        ip_addr = #{record.ipAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.maxSupport != null">
+        max_support = #{record.maxSupport,jdbcType=INTEGER},
+      </if>
+      <if test="record.netDelay != null">
+        net_delay = #{record.netDelay,jdbcType=INTEGER},
+      </if>
+      <if test="record.targetArea != null">
+        target_area = #{record.targetArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverStatus != null">
+        server_status = #{record.serverStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpuUtility != null">
+        cpu_utility = #{record.cpuUtility,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memFree != null">
+        mem_free = #{record.memFree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverType != null">
+        server_type = #{record.serverType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverLevel != null">
+        server_level = #{record.serverLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.softwareVer != null">
+        software_ver = #{record.softwareVer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemVer != null">
+        system_ver = #{record.systemVer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpu != null">
+        cpu = #{record.cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memory != null">
+        memory = #{record.memory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hdisk != null">
+        hdisk = #{record.hdisk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.netCard != null">
+        net_card = #{record.netCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update service_info
+    set ip_addr = #{record.ipAddr,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=BIGINT},
+      max_support = #{record.maxSupport,jdbcType=INTEGER},
+      net_delay = #{record.netDelay,jdbcType=INTEGER},
+      target_area = #{record.targetArea,jdbcType=VARCHAR},
+      server_status = #{record.serverStatus,jdbcType=VARCHAR},
+      cpu_utility = #{record.cpuUtility,jdbcType=VARCHAR},
+      mem_free = #{record.memFree,jdbcType=VARCHAR},
+      server_type = #{record.serverType,jdbcType=VARCHAR},
+      server_level = #{record.serverLevel,jdbcType=VARCHAR},
+      software_ver = #{record.softwareVer,jdbcType=VARCHAR},
+      system_ver = #{record.systemVer,jdbcType=VARCHAR},
+      cpu = #{record.cpu,jdbcType=VARCHAR},
+      memory = #{record.memory,jdbcType=VARCHAR},
+      hdisk = #{record.hdisk,jdbcType=VARCHAR},
+      net_card = #{record.netCard,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfo">
+    update service_info
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="maxSupport != null">
+        max_support = #{maxSupport,jdbcType=INTEGER},
+      </if>
+      <if test="netDelay != null">
+        net_delay = #{netDelay,jdbcType=INTEGER},
+      </if>
+      <if test="targetArea != null">
+        target_area = #{targetArea,jdbcType=VARCHAR},
+      </if>
+      <if test="serverStatus != null">
+        server_status = #{serverStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuUtility != null">
+        cpu_utility = #{cpuUtility,jdbcType=VARCHAR},
+      </if>
+      <if test="memFree != null">
+        mem_free = #{memFree,jdbcType=VARCHAR},
+      </if>
+      <if test="serverType != null">
+        server_type = #{serverType,jdbcType=VARCHAR},
+      </if>
+      <if test="serverLevel != null">
+        server_level = #{serverLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVer != null">
+        software_ver = #{softwareVer,jdbcType=VARCHAR},
+      </if>
+      <if test="systemVer != null">
+        system_ver = #{systemVer,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="hdisk != null">
+        hdisk = #{hdisk,jdbcType=VARCHAR},
+      </if>
+      <if test="netCard != null">
+        net_card = #{netCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ip_addr = #{ipAddr,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qxxg.springcloud.cloudmbg.entity.ServiceInfo">
+    update service_info
+    set id = #{id,jdbcType=BIGINT},
+      max_support = #{maxSupport,jdbcType=INTEGER},
+      net_delay = #{netDelay,jdbcType=INTEGER},
+      target_area = #{targetArea,jdbcType=VARCHAR},
+      server_status = #{serverStatus,jdbcType=VARCHAR},
+      cpu_utility = #{cpuUtility,jdbcType=VARCHAR},
+      mem_free = #{memFree,jdbcType=VARCHAR},
+      server_type = #{serverType,jdbcType=VARCHAR},
+      server_level = #{serverLevel,jdbcType=VARCHAR},
+      software_ver = #{softwareVer,jdbcType=VARCHAR},
+      system_ver = #{systemVer,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      hdisk = #{hdisk,jdbcType=VARCHAR},
+      net_card = #{netCard,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where ip_addr = #{ipAddr,jdbcType=VARCHAR}
+  </update>
+</mapper>
