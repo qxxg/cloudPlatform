@@ -14,3 +14,4 @@ logging:
     com:
       qxxg:
         springcloud: debug
+

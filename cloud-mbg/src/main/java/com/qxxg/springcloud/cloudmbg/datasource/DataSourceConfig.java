@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -19,18 +20,19 @@ import java.util.List;
  * @author:SmallSand
  * @Date:Created in 2019/8/21
  */
+@PropertySource(value = "classpath:application-data.properties")
 @Configuration
 @Slf4j
 public class DataSourceConfig {
 
-   /* @Value("${mysql.datasource.write.jdbc-url}")
+    @Value("${mysql.datasource.write.jdbc-url}")
     private String url;
 
     @Value("${mysql.datasource.write.username}")
     private String username;
 
     @Value("${mysql.datasource.write.password}")
-    private String pwd;*/
+    private String pwd;
     
     @Primary
     @Bean(name = "primaryDataSource")
@@ -38,9 +40,9 @@ public class DataSourceConfig {
     //@ConfigurationProperties(prefix = "mysql.datasource.write")
     public DataSource primaryDataSource() {
         MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
-        mysqlXADataSource.setUrl("jdbc:mysql://192.168.2.228:3306/ty_vpn?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai");
-        mysqlXADataSource.setUser("root");
-        mysqlXADataSource.setPassword("123456");
+        mysqlXADataSource.setUrl(url);
+        mysqlXADataSource.setUser(username);
+        mysqlXADataSource.setPassword(pwd);
         AtomikosDataSourceBean atomikosDataSource = new AtomikosDataSourceBean();
         atomikosDataSource.setUniqueResourceName("primaryDataSource");
         atomikosDataSource.setXaDataSource(mysqlXADataSource);
