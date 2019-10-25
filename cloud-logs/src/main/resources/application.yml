@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: cloud-logs
+  data:
+    mongodb:
+      uri: mongodb://192.168.2.226:27017,192.168.2.227:27017,192.168.2.228:27017/logs
+server:
+  port: 4002
+
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://smallsand:smallsand@service1:7777/eureka/
+
