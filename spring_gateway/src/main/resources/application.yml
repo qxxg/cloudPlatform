@@ -1,0 +1,43 @@
+server:
+  port: 5555
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 1000
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: service_cloud_user
+          uri: lb://cloud-user
+          order: -100
+          predicates:
+            - Path=/test/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+                key-resolver: '#{@hostAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 2
+  redis:
+    expireSeconds: 120
+    timeout: 20000
+    cluster:
+      nodes: 192.168.2.226:7010 ,192.168.2.226:7011, 192.168.2.227:7010, 192.168.2.227:7011, 192.168.2.228:7010, 192.168.2.228:7011
+      maxRedirects: 6
+    max-active: 8
+    min-idle: 0
+    max-idle: 8
+    max-wait: -1
+
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://smallsand:smallsand@service1:7777/eureka/

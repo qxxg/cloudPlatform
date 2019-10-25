@@ -11,8 +11,8 @@ eureka:
   instance:
     hostname: service1
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: false
+    register-with-eureka: false
     service-url:
-      defaultZone:  http://smallsand:smallsand@service2:8888/eureka/,http://smallsand:smallsand@service3:9999/eureka/
+      defaultZone:  http://smallsand:smallsand@service1:7777/eureka/
 

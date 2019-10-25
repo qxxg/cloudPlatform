@@ -7,11 +7,16 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone:  http://smallsand:smallsand@service1:7777/eureka/,http://smallsand:smallsand@service2:8888/eureka/,http://smallsand:smallsand@service3:9999/eureka/
+      defaultZone:  http://smallsand:smallsand@service1:7777/eureka/
 
 logging:
   level:
     com:
       qxxg:
         springcloud: debug
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: true
 
